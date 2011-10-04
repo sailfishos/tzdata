@@ -1,0 +1,18 @@
+<package project="Mer:Trunk:Base" name="tzdata">
+  <title>Timezone data</title>
+  <description>This package contains data files with rules for various timezones around
+the world.
+
+#%package java
+#Summary: Timezone data for Java
+#Group: System Environment/Base
+#Source3: javazic.tar.gz
+#Patch0: javazic-fixup.patch
+#
+#%description java
+#This package contains timezone information for use by Java runtimes.
+
+
+</description>
+  <url>ftp://elsie.nci.nih.gov/pub/</url>
+</package>

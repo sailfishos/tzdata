@@ -1,0 +1,17 @@
+* Sat May 28 2011 Tapio Rantala <ext-tapio.rantala@nokia.com> - 2011e
+- New upstream version
+- Add calendar and timed subpackages for generated files (BMC#12919)
+  + Add extras from maemo tzdata version 2011e-1
+  + Add extras-build patch to build extras correctly
+
+* Fri May 27 2011 Anas Nashif <anas.nashif@intel.com> - 2010b
+- Dont depend on fdupes, avoid too many cycles
+
+* Tue May 24 2011 Anas Nashif <anas.nashif@intel.com> - 2010b
+- Repackage documentaion/translations
+
+* Sat Apr 10 2010 Anas Nashif <anas.nashif@intel.com> - 2010b
+- Fixed rpmlint errors
+
+* Mon Feb 08 2010 Austin Zhang <austin.zhang@intel.com> - 2010b
+- Upstream 2010b
