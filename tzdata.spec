@@ -1,54 +1,84 @@
-#specfile originally created for Fedora, modified for Moblin Linux
-Summary: Timezone data
+Summary: Time zone and daylight-saving time data
 Name: tzdata
-Version: 2011e
+Version: 2013b
 %define tzdata_version %{version}
-%define tzcode_version 2011e
+%define tzcode_version %{version}
 Release: 1
 License: Public Domain
 Group: System/Base
-URL: ftp://elsie.nci.nih.gov/pub/
-
-# The tzdata-base-0.tar.bz2 is a simple building infrastructure and
-# test suite.  It is occasionally updated from glibc sources, and as
-# such is under LGPLv2+, but none of this ever gets to be part of
-# final zoneinfo files.
-Source0: tzdata-base-0.tar.bz2
-# These are official upstream.
-Source1: ftp://elsie.nci.nih.gov/pub/tzdata%{tzdata_version}.tar.gz
-Source2: ftp://elsie.nci.nih.gov/pub/tzcode%{tzcode_version}.tar.gz
+URL: ftp://ftp.iana.org/tz/
+Source0: tzdata%{tzdata_version}.tar.gz
 Conflicts: glibc-common <= 2.3.2-63
 BuildArch: noarch
 
 %description
-This package contains data files with rules for various timezones around
-the world.
+This package contains data required for the implementation of
+standard local time for many representative locations around the
+globe. It is updated periodically to reflect changes made by
+political bodies to time zone boundaries, UTC offsets, and
+daylight-saving rules.
 
 %prep
-%setup -q -n tzdata
-mkdir tzdata%{tzdata_version}
-tar xzf %{SOURCE1} -C tzdata%{tzdata_version}
-mkdir tzcode%{tzcode_version}
-tar xzf %{SOURCE2} -C tzcode%{tzcode_version}
-sed -e 's|@objpfx@|'`pwd`'/obj/|' \
-    -e 's|@datadir@|%{_datadir}|' \
-  Makeconfig.in > Makeconfig
+%setup -q -c -n tzdata
 
 %build
-make
-grep -v tz-art.htm tzcode%{tzcode_version}/tz-link.htm > tzcode%{tzcode_version}/tz-link.html
+# The build setup is adapted from Ubuntu tzdata package version
+# 2012e-0ubuntu0.12.04.1
+TIMEZONES="africa \
+	   antarctica \
+	   asia \
+	   australasia \
+           europe \
+           northamerica \
+           southamerica \
+           etcetera \
+           factory \
+           backward \
+           systemv \
+           pacificnew \
+           solar87 \
+           solar88 \
+           solar89"
+
+# Build the "default" version
+for zone in $TIMEZONES; do \
+  /usr/sbin/zic -d tzgen -L /dev/null -y yearistype.sh ${zone}
+done
+
+# Build the "posix" and "right" versions
+for zone in $TIMEZONES; do
+   /usr/sbin/zic -d tzgen/posix -L /dev/null -y yearistype.sh ${zone}
+   /usr/sbin/zic -d tzgen/right -L leapseconds -y tzgen/yearistype.sh ${zone}
+done
+
+# Generate a posixrules file
+/usr/sbin/zic -d tzgen -p America/New_York
+
+# Replace hardlinks by symlinks
+cd tzgen
+fdupes -1 -H -q -r . | while read line ; do
+    set -- ${line}
+    tgt="${1##./}"
+    shift
+    while [ "$#" != 0 ] ; do
+	link="${1##./}"
+	reltgt="$(echo $link | sed -e 's,[^/]\+$,,g' -e 's,[^/]\+,..,g')${tgt}"
+	ln -sf ${reltgt} ${link}
+	shift
+    done
+done
+cd -
 
 %install
 rm -fr $RPM_BUILD_ROOT
-sed -i 's|@install_root@|%{buildroot}|' Makeconfig
-make install
+install -d %{buildroot}%{_datadir}/zoneinfo
+cp -r tzgen/* %{buildroot}%{_datadir}/zoneinfo
+install -m 644 iso3166.tab %{buildroot}%{_datadir}/zoneinfo
+install -m 644 zone.tab %{buildroot}%{_datadir}/zoneinfo
 
 #cp -pr zoneinfo/java $RPM_BUILD_ROOT%{_datadir}/javazi
 
 %check
-echo ====================TESTING=========================
-make check
-echo ====================TESTING END=====================
 
 %clean
 rm -rf %{buildroot}
@@ -56,6 +86,3 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %{_datadir}/zoneinfo
-%doc tzcode%{tzcode_version}/README
-%doc tzcode%{tzcode_version}/Theory
-%doc tzcode%{tzcode_version}/tz-link.html
