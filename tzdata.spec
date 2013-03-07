@@ -76,8 +76,6 @@ cp -r tzgen/* %{buildroot}%{_datadir}/zoneinfo
 install -m 644 iso3166.tab %{buildroot}%{_datadir}/zoneinfo
 install -m 644 zone.tab %{buildroot}%{_datadir}/zoneinfo
 
-#cp -pr zoneinfo/java $RPM_BUILD_ROOT%{_datadir}/javazi
-
 %check
 
 %clean
