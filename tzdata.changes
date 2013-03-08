@@ -1,3 +1,10 @@
+* Fri Mar 08 2013 Petri M. Gerdt <petri.gerdt@jollamobile.com> - 2013b
+- New upstream version 2013b
+- New build setup, adapted from Ubuntu tzdata 2012e-0ubuntu0.12.04.1
+- Remove obsolete TZ database files
+- Remove calendar and timed subpackages
+- Remove extras and extras build patch
+
 * Sat May 28 2011 Tapio Rantala <ext-tapio.rantala@nokia.com> - 2011e
 - New upstream version
 - Add calendar and timed subpackages for generated files (BMC#12919)
