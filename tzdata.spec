@@ -1,6 +1,6 @@
 Summary: Time zone and daylight-saving time data
 Name: tzdata
-Version: 2013d
+Version: 2013h
 %define tzdata_version %{version}
 %define tzcode_version %{version}
 Release: 1
