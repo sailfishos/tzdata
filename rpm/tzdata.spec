@@ -72,6 +72,7 @@ install -d %{buildroot}%{_datadir}/zoneinfo
 cp -r tzgen/* %{buildroot}%{_datadir}/zoneinfo
 install -m 644 iso3166.tab %{buildroot}%{_datadir}/zoneinfo
 install -m 644 zone.tab %{buildroot}%{_datadir}/zoneinfo
+install -m 644 zone1970.tab %{buildroot}%{_datadir}/zoneinfo
 
 %check
 
