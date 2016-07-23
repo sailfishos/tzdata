@@ -6,7 +6,7 @@ Version: 2013i
 Release: 1
 License: Public Domain
 Group: System/Base
-URL: ftp://ftp.iana.org/tz/
+URL: https://www.iana.org/time-zones
 Source0: %{name}-%{version}.tar.gz
 Conflicts: glibc-common <= 2.3.2-63
 BuildArch: noarch
