@@ -1,13 +1,11 @@
 Summary: Time zone and daylight-saving time data
 Name: tzdata
-Version: 2013i
-%define tzdata_version %{version}
-%define tzcode_version %{version}
+Version: 2016f
 Release: 1
 License: Public Domain
 Group: System/Base
-URL: ftp://ftp.iana.org/tz/
-Source0: %{name}-%{version}.tar.gz
+URL: https://www.iana.org/time-zones
+Source0: %{name}%{version}.tar.gz
 Conflicts: glibc-common <= 2.3.2-63
 BuildArch: noarch
 
@@ -19,7 +17,7 @@ political bodies to time zone boundaries, UTC offsets, and
 daylight-saving rules.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%setup -q -c
 
 %build
 # The build setup is adapted from Ubuntu tzdata package version
