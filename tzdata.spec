@@ -1,6 +1,6 @@
 Summary: Time zone and daylight-saving time data
 Name: tzdata
-Version: 2016f
+Version: 2017b
 Release: 1
 License: Public Domain
 Group: System/Base
