@@ -1,12 +1,13 @@
 Summary: Time zone and daylight-saving time data
 Name: tzdata
-Version: 2017b
+%define tzversion 2017b
+Version: %{tzversion}+git1
 Release: 1
 License: Public Domain
-Group: System/Base
 URL: https://www.iana.org/time-zones
-Source0: %{name}%{version}.tar.gz
-Conflicts: glibc-common <= 2.3.2-63
+Source0: %{name}%{tzversion}.tar.gz
+BuildRequires: fdupes
+BuildRequires: glibc-common
 BuildArch: noarch
 
 %description
@@ -49,33 +50,22 @@ done
 # Generate a posixrules file
 /usr/sbin/zic -d tzgen -p America/New_York
 
-# Replace hardlinks by symlinks
-cd tzgen
-fdupes -1 -H -q -r . | while read line ; do
-    set -- ${line}
-    tgt="${1##./}"
-    shift
-    while [ "$#" != 0 ] ; do
-	link="${1##./}"
-	reltgt="$(echo $link | sed -e 's,[^/]\+$,,g' -e 's,[^/]\+,..,g')${tgt}"
-	ln -sf ${reltgt} ${link}
-	shift
-    done
-done
-cd -
-
 %install
 rm -fr $RPM_BUILD_ROOT
 install -d %{buildroot}%{_datadir}/zoneinfo
-cp -r tzgen/* %{buildroot}%{_datadir}/zoneinfo
+cp -prd tzgen/* %{buildroot}%{_datadir}/zoneinfo
 install -m 644 iso3166.tab %{buildroot}%{_datadir}/zoneinfo
 install -m 644 zone.tab %{buildroot}%{_datadir}/zoneinfo
 install -m 644 zone1970.tab %{buildroot}%{_datadir}/zoneinfo
 
-%check
-
-%clean
-rm -rf %{buildroot}
+# Deduplicate files, use hardlinks here, see JB#52707
+fdupes -1 -q -r %{buildroot}%{_datadir}/zoneinfo | while read line ; do
+    set -- ${line}
+    while [ "$#" -ge 2 ] ; do
+	ln -f "$1" "$2"
+	shift
+    done
+done
 
 %files
 %defattr(-,root,root)
