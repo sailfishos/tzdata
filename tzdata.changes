@@ -1,3 +1,6 @@
+* Fri Jan 15 2021 Tomi Leppänen <tomi.leppanen@jolla.com> - 2017b+git1
+- [tzdata] Don't use symlinks for tzdata. Fixes JB#52707
+
 * Thu Jun 15 2017 Pekka Vuorela <pekka.vuorela@jola.com> - 2017b
 - [tzdata] Update to 2017b. Contributes to JB#38970
 
@@ -10,7 +13,7 @@
 * Thu Oct 09 2014 Slava Monich <slava.monich@jolla.com> - 2014h
 - New upstream version 2014h
 
-* Tue Dec 02 2013 Petri M. Gerdt <petri.gerdt@jollamobile.com> - 2013h
+* Mon Dec 02 2013 Petri M. Gerdt <petri.gerdt@jollamobile.com> - 2013h
 - New upstream version 2013h
 
 * Tue Jul 16 2013 Davide Bettio <davide.bettio@ispirata.com> - 2013d
