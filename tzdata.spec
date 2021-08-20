@@ -1,6 +1,6 @@
 Summary: Time zone and daylight-saving time data
 Name: tzdata
-%define tzversion 2017b
+%define tzversion 2021a
 Version: %{tzversion}+git1
 Release: 1
 License: Public Domain
@@ -32,19 +32,17 @@ TIMEZONES="africa \
            southamerica \
            etcetera \
            factory \
-           backward \
-           systemv \
-           pacificnew"
+           backward"
 
 # Build the "default" version
 for zone in $TIMEZONES; do \
-  /usr/sbin/zic -d tzgen -L /dev/null -y yearistype.sh ${zone}
+  /usr/sbin/zic -d tzgen -L /dev/null ${zone}
 done
 
 # Build the "posix" and "right" versions
 for zone in $TIMEZONES; do
-   /usr/sbin/zic -d tzgen/posix -L /dev/null -y yearistype.sh ${zone}
-   /usr/sbin/zic -d tzgen/right -L leapseconds -y tzgen/yearistype.sh ${zone}
+   /usr/sbin/zic -d tzgen/posix -L /dev/null ${zone}
+   /usr/sbin/zic -d tzgen/right -L leapseconds ${zone}
 done
 
 # Generate a posixrules file
