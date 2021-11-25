@@ -1,3 +1,6 @@
+* Thu Nov 25 2021 Pekka Vuorela <pekka.vuorela@jolla.com> - 2021a+git2
+- [tzdata] Include license file as %license. JB#55991
+
 * Thu Aug 19 2021 Pekka Vuorela <pekka.vuorela@jolla.com> - 2021a+git1
 - [tzdata] Update to 2021a. Contributes to JB#48236
 
