@@ -1,3 +1,6 @@
+* Mon Feb 12 2024 Matti Lehtimäki <matti.lehtimaki@jolla.com> - 2024a+git1
+- [tzdata] Update to 2024a. JB#61398
+
 * Thu Nov 25 2021 Pekka Vuorela <pekka.vuorela@jolla.com> - 2021a+git2
 - [tzdata] Include license file as %license. JB#55991
 

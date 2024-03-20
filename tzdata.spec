@@ -1,7 +1,7 @@
 Summary: Time zone and daylight-saving time data
 Name: tzdata
-%define tzversion 2021a
-Version: %{tzversion}+git2
+%define tzversion 2024a
+Version: %{tzversion}+git1
 Release: 1
 License: Public Domain
 URL: https://www.iana.org/time-zones
