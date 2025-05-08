@@ -1,6 +1,6 @@
 Summary: Time zone and daylight-saving time data
 Name: tzdata
-%define tzversion 2024a
+%define tzversion 2025b
 Version: %{tzversion}+git1
 Release: 1
 License: Public Domain
@@ -24,9 +24,9 @@ daylight-saving rules.
 # The build setup is adapted from Ubuntu tzdata package version
 # 2012e-0ubuntu0.12.04.1
 TIMEZONES="africa \
-	   antarctica \
-	   asia \
-	   australasia \
+           antarctica \
+           asia \
+           australasia \
            europe \
            northamerica \
            southamerica \
@@ -60,12 +60,11 @@ install -m 644 zone1970.tab %{buildroot}%{_datadir}/zoneinfo
 fdupes -1 -q -r %{buildroot}%{_datadir}/zoneinfo | while read line ; do
     set -- ${line}
     while [ "$#" -ge 2 ] ; do
-	ln -f "$1" "$2"
-	shift
+        ln -f "$1" "$2"
+        shift
     done
 done
 
 %files
-%defattr(-,root,root)
 %license LICENSE
 %{_datadir}/zoneinfo
